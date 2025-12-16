@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
 import { getUsers } from "../Services/usersAPI";
-import getItems2 from "../Services/dataAPI2";
 
-function UserList({ myUrl }) {
+function UserList() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const serverUrl = myUrl;
 
   useEffect(() => {
-    //getItems2(myUrl).then((data) => {
-    getUsers().then((data) => {
+    getUsers("/api/users").then((data) => {
       setUsers(data);
       setLoading(false);
     });

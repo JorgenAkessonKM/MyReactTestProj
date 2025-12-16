@@ -1,3 +1,5 @@
-const basePath = "https://jsonplaceholder.typicode.com/users";
+//const basePath = "https://jsonplaceholder.typicode.com/users";
+//const basePath = "http://localhost:8080/api/users";
+const basePath = "http://localhost:8080";
 
-export const getUsers = () => fetch(basePath).then((data) => data.json());
+export function getUsers(path: string) {return fetch(basePath + path).then((data) => data.json())};

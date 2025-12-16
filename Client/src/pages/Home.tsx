@@ -5,7 +5,7 @@ import UserList from "../Components/userList";
 const Home: React.FC = () => (
   <div>
     <h1>Home Page</h1>
-    <UserList myUrl="https://jsonplaceholder.typicode.com/users" />
+    <UserList />
 
     <div style={{ marginTop: 20 }}>
       <Link to="/login">
