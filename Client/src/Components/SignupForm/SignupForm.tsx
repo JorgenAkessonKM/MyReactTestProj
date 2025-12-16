@@ -12,9 +12,11 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function SignupForm({ onSubmit }: Props) {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [errors, setErrors] = useState<{
+    name?: string;
     email?: string;
     password?: string;
     confirm?: string;
@@ -24,6 +26,7 @@ export default function SignupForm({ onSubmit }: Props) {
 
   function validate() {
     const e: { email?: string; password?: string; confirm?: string } = {};
+    if (!name) e.name = "Name is required.";
     if (!email) e.email = "Email is required.";
     else if (!emailRegex.test(email)) e.email = "Enter a valid email.";
     if (!password) e.password = "Password is required.";
@@ -42,8 +45,14 @@ export default function SignupForm({ onSubmit }: Props) {
     if (Object.keys(v).length > 0) return;
     setLoading(true);
     try {
-      // Replace with real signup call
-      await new Promise((r) => setTimeout(r, 500));
+      const username = email.split("@")[0];
+      const res = await fetch("http://localhost:8080/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, username, email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || "Signup failed");
       onSubmit?.({ email, password });
     } catch (err: any) {
       setSubmitError(err?.message ?? "Signup failed");
@@ -61,6 +70,22 @@ export default function SignupForm({ onSubmit }: Props) {
           <Alert text={submitError} />
         </div>
       )}
+
+      <div className="mb-3">
+        <label className="form-label" htmlFor="email">
+          Name
+        </label>
+        <input
+          id="name"
+          type="text"
+          className={`form-control ${errors?.name ? "is-invalid" : ""}`}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          aria-invalid={!!errors?.name}
+          placeholder="Full name"
+        />
+        {errors?.name && <div className="invalid-feedback">{errors.name}</div>}
+      </div>
 
       <div className="mb-3">
         <label className="form-label" htmlFor="email">

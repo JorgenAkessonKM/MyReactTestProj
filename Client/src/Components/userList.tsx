@@ -6,17 +6,23 @@ function UserList() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getUsers("/api/users").then((data) => {
-      setUsers(data);
-      setLoading(false);
-    });
+    getUsers("/api/users")
+      .then((data) => {
+        setUsers(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to load users:", err);
+        setUsers([]);
+        setLoading(false);
+      });
   }, []);
 
   return (
     <>
       {(() => {
         if (loading) return <p>Loading...</p>;
-        if (users == undefined) return <span>No Users received!</span>;
+        if (!users || users.length === 0) return <span>No Users received!</span>;
         else {
           return (
             <ul>

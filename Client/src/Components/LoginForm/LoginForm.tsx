@@ -36,8 +36,16 @@ export default function LoginForm({ onSubmit }: Props) {
     if (Object.keys(v).length > 0) return;
     setLoading(true);
     try {
-      // replace with real auth call if needed
-      await new Promise((r) => setTimeout(r, 500));
+      const username = email.split("@")[0];
+      const res = await fetch("http://localhost:8080/api/auth/login", {
+        method: "Post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      }).then((response) => {
+        if (!response.ok) {
+          throw "Failed login!" + response.status;
+        }
+      });
       onSubmit?.({ email, password });
     } catch (err: any) {
       setSubmitError(err?.message ?? "Login failed");
