@@ -5,7 +5,7 @@ import Alert from "../Alert";
 import "./LoginForm.css";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { increment } from "../../app/counterSlice";
+import { setName } from "../../app/loggedInNameSlice";
 
 interface Props {
   onSubmit?: (payload: { email: string; password: string }) => void;
@@ -54,7 +54,7 @@ export default function LoginForm({ onSubmit }: Props) {
         })
         .then((data) => {
           console.log("Data received:", data);
-          dispatch(increment(data.name));
+          dispatch(setName(data.name));
           return data;
         })
         .catch((err) => {
