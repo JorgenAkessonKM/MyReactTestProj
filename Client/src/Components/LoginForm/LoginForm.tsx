@@ -4,6 +4,8 @@ import Button from "../Button";
 import Alert from "../Alert";
 import "./LoginForm.css";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { increment } from "../../app/counterSlice";
 
 interface Props {
   onSubmit?: (payload: { email: string; password: string }) => void;
@@ -17,6 +19,7 @@ export default function LoginForm({ onSubmit }: Props) {
   const [errors, setErrors] = useState<{ email?: string; password?: string }>();
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   function validate() {
     const e: { email?: string; password?: string } = {};
@@ -37,15 +40,22 @@ export default function LoginForm({ onSubmit }: Props) {
     setLoading(true);
     try {
       const username = email.split("@")[0];
-      const res = await fetch("http://localhost:8080/api/auth/login", {
+      await fetch("http://localhost:8080/api/auth/login", {
         method: "Post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
-      }).then((response) => {
-        if (!response.ok) {
-          throw "Failed login!" + response.status;
-        }
-      });
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw "Failed login!" + response.status;
+          }
+          const data = response.json();
+          return data;
+        })
+        .then((data) => {
+          dispatch(increment(data.name));
+          console.log(data);
+        });
       onSubmit?.({ email, password });
     } catch (err: any) {
       setSubmitError(err?.message ?? "Login failed");
