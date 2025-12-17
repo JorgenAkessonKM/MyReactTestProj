@@ -14,8 +14,8 @@ interface Props {
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function LoginForm({ onSubmit }: Props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("jorgen.akesson@regalrexnord.com");
+  const [password, setPassword] = useState("123456");
   const [errors, setErrors] = useState<{ email?: string; password?: string }>();
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -46,15 +46,19 @@ export default function LoginForm({ onSubmit }: Props) {
         body: JSON.stringify({ username, password }),
       })
         .then((response) => {
+          console.log("Response:", response);
           if (!response.ok) {
             throw "Failed login!" + response.status;
           }
-          const data = response.json();
-          return data;
+          return response.json();
         })
         .then((data) => {
+          console.log("Data received:", data);
           dispatch(increment(data.name));
-          console.log(data);
+          return data;
+        })
+        .catch((err) => {
+          throw new Error(err.message || "Login failed");
         });
       onSubmit?.({ email, password });
     } catch (err: any) {
