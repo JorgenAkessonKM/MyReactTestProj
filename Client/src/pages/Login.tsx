@@ -2,15 +2,18 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import AuthLayout from "../Components/AuthLayout/AuthLayout";
 import LoginForm from "../Components/LoginForm/LoginForm";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/AuthProvider";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const auth = useAuth();
 
   async function handleSubmit(payload: { email: string; password: string }) {
     try {
-      await auth.login(payload.email, payload.password);
+      // Exchange with call to AuthProvider
+      console.log("Loggin:", payload.email, " Password:", payload.password);
+      //auth.loginAction(input);
+      //
+      //await auth.login(payload.email, payload.password);
       navigate("/");
     } catch (err) {
       // if login fails, the form shows errors; keep simple here

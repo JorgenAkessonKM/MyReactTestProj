@@ -3,9 +3,10 @@ import { useState } from "react";
 import Button from "../Button";
 import Alert from "../Alert";
 import "./LoginForm.css";
-import { Link } from "react-router-dom";
+import { data, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setName } from "../../app/loggedInNameSlice";
+import { useAuth } from "../../contexts/AuthProvider";
 
 interface Props {
   onSubmit?: (payload: { email: string; password: string }) => void;
@@ -20,6 +21,12 @@ export default function LoginForm({ onSubmit }: Props) {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const auth = useAuth();
+
+  const [input, setInput] = useState({
+    username: "",
+    password: "",
+  });
 
   function validate() {
     const e: { email?: string; password?: string } = {};
@@ -40,26 +47,24 @@ export default function LoginForm({ onSubmit }: Props) {
     setLoading(true);
     try {
       const username = email.split("@")[0];
-      await fetch("http://localhost:8080/api/auth/login", {
-        method: "Post",
+      const res = await fetch("http://localhost:8080/api/auth/login", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
-      })
-        .then((response) => {
-          console.log("Response:", response);
-          if (!response.ok) {
-            throw "Failed login!" + response.status;
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log("Data received:", data);
-          dispatch(setName(data.name));
-          return data;
-        })
-        .catch((err) => {
-          throw new Error(err.message || "Login failed");
-        });
+        credentials: "include",
+      });
+
+      console.log("Response:", res);
+      if (!res.ok) throw new Error("Failed login: " + res.status);
+
+      const responseData = await res.json();
+      console.log("Data received:", responseData);
+
+      dispatch(setName(responseData.name));
+      const token = responseData.token;
+      if (!token) throw new Error("No token returned from server");
+
+      auth.loginAction({ username, password, token });
       onSubmit?.({ email, password });
     } catch (err: any) {
       setSubmitError(err?.message ?? "Login failed");

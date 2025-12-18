@@ -5,9 +5,9 @@ import Content from "./Components/Content/Content";
 import Footer from "./Components/Footer/Footer";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import {store} from "./app/store";
+import { store } from "./app/store";
 
-function App() {
+export default function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -20,5 +20,3 @@ function App() {
     </Provider>
   );
 }
-
-export default App;

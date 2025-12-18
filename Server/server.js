@@ -4,9 +4,12 @@ const cors = require("cors");
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const db = require('./db');
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET || 'dev-jwt-secret-change-this';
 
 const corsOptions = {
-        origin: ["http://localhost:5173"]
+        origin: ["http://localhost:5173"],
+        credentials: true
 };
 
 app.use(cors(corsOptions));
@@ -52,7 +55,8 @@ app.post('/api/auth/register', async (req, res) => {
         await db.createUser({ name, username, email, passwordHash: hash });
         const user = await db.getUserByUsername(username);
         req.session.userId = user.id;
-        res.json({ id: user.id, name: user.name, username: user.username, email: user.email });
+        const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1h' });
+        res.json({ id: user.id, name: user.name, username: user.username, email: user.email, token });
     } catch (err) {
         console.error('Register error', err);
         if (err && err.code === 'SQLITE_CONSTRAINT') return res.status(409).json({ error: 'Username already exists' });
@@ -69,11 +73,14 @@ app.post('/api/auth/login', async (req, res) => {
         const ok = await bcrypt.compare(password, user.password);
         if (!ok) return res.status(401).json({ error: 'Invalid credentials' });
         req.session.userId = user.id;
-        res.json({ id: user.id, name: user.name, username: user.username, email: user.email });
+        const token = jwt.sign({ userId: user.id }, JWT_SECRET, { expiresIn: '1h' });
+        console.log("Token: ", token);
+        res.json({ id: user.id, name: user.name, username: user.username, email: user.email, token });
     } catch (err) {
         console.error('Login error', err);
         res.status(500).json({ error: 'Server error' });
     }
+    console.log("LogedIn at Server!");
 });
 
 app.post('/api/auth/logout', (req, res) => {
@@ -84,6 +91,7 @@ app.post('/api/auth/logout', (req, res) => {
         }
         res.json({ ok: true });
     });
+    console.log("LogedOut at Server!");
 });
 
 app.get('/api/auth/validate', async (req, res) => {

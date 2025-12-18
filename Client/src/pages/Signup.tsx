@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import AuthLayout from "../Components/AuthLayout/AuthLayout";
 import SignupForm from "../Components/SignupForm/SignupForm";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/AuthProvider";
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
