@@ -1,0 +1,13 @@
+.myClass {
+    color: green;
+}
+
+.top {
+    display: flex;
+    flex-direction: row;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+}

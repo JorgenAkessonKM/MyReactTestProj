@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Navbar: React.FC = () => (
-  <nav className="navbar navbar-expand-lg navbar-light bg-light">
-    <div className=" navbar-collapse" id="navbarNav">
+  <nav className="navbar navbar-expand-lg navbar-light">
+    <div className="navbar-collapse" id="navbarNav">
       <ul className="navbar-nav">
         <li className="nav-item">
           <a className="nav-link" href="/">
