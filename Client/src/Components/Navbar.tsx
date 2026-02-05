@@ -40,7 +40,12 @@ export default function Navbar() {
               </a>
             </li>
             <li className="nav-item">
-              <p className="nav-link">{name}</p>
+              <p
+                className="nav-link"
+                style={{ marginBottom: 0, color: "green" }}
+              >
+                {name}
+              </p>
             </li>
             <li className="nav-item">
               <button
