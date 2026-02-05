@@ -1,13 +1,4 @@
-.myClass {
-    color: green;
-}
-
-.top {
+.test {
     display: flex;
-    flex-direction: row;
-}
-
-.center {
-    display: flex;
-    align-items: center;
+    background-color: red;
 }
