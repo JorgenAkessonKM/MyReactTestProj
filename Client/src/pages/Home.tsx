@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import UserList from "../Components/userList";
+import "./Home.css";
 
 const Home: React.FC = () => (
-  <div>
+  <div className="home-container">
     <h1>Home Page</h1>
     <UserList />
 

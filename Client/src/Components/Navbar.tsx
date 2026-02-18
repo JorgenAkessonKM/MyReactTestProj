@@ -3,6 +3,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setName } from "../app/loggedInNameSlice";
 import { useAuth } from "../contexts/AuthProvider";
+import "./Navbar.css";
 
 export default function Navbar() {
   const name = useSelector((state: any) => state.loggedInName.name);
@@ -25,6 +26,11 @@ export default function Navbar() {
               </a>
             </li>
             <li className="nav-item">
+              <a className="nav-link" href="/cards">
+                Cards
+              </a>
+            </li>
+            <li className="nav-item">
               <a className="nav-link" href="/contact">
                 Contact
               </a>
@@ -40,16 +46,10 @@ export default function Navbar() {
               </a>
             </li>
             <li className="nav-item">
-              <p
-                className="nav-link"
-                style={{ marginBottom: 0, color: "green" }}
-              >
-                {name}
-              </p>
+              <p className="nav-link">{name}</p>
             </li>
             <li className="nav-item">
               <button
-                style={{ display: "flex", justifyContent: "flex-end" }}
                 onClick={() => {
                   auth.logOut();
                   dispatch(setName("Logged out!"));

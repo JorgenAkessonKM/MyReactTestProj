@@ -1,0 +1,97 @@
+/* General page styling */
+main {
+    background-color: #0f1419;
+    min-height: calc(100vh - 400px);
+    padding: 2rem;
+}
+
+h1 {
+    color: #ffffff;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+h2, h3 {
+    color: #e0e0e0;
+}
+
+p {
+    color: #b0b0b0;
+    line-height: 1.6;
+}
+
+button {
+    padding: 0.5rem 1.5rem;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+/* Home Page */
+.home-container {
+    background-color: #0f1419;
+    padding: 2rem;
+}
+
+/* About Page */
+.about-container {
+    background-color: #0f1419;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Contact Page */
+.contact-container {
+    background-color: #0f1419;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.contact-form {
+    background-color: #1a1f2e;
+    border: 1px solid #2d3748;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+/* Cards Page */
+.cards-container {
+    background-color: #0f1419;
+    padding: 2rem;
+}
+
+/* 404 Page */
+.not-found-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 300px);
+    background-color: #0f1419;
+    padding: 2rem;
+}
+
+.not-found-container h1 {
+    font-size: 4rem;
+    color: #e74c3c;
+    margin-bottom: 1rem;
+}
+
+.not-found-container p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #b0b0b0;
+}

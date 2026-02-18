@@ -1,0 +1,39 @@
+.not-found-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 300px);
+    background-color: #ffffff;
+    padding: 2rem;
+    text-align: center;
+}
+
+.not-found-container h1 {
+    font-size: 4rem;
+    color: #dc3545;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.not-found-container p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #555555;
+}}
+
+.not-found-container a {
+    padding: 0.75rem 2rem;
+    background-color: #3498db;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.not-found-container a:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}

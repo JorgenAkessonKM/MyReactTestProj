@@ -1,0 +1,31 @@
+#div1 ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cards-page {
+  background-color: #ffffff;
+  padding: 2rem;
+  min-height: calc(100vh - 400px);
+}
+
+.cards-page h1 {
+  color: #222222;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .cards-page {
+    padding: 1rem;
+  }
+
+  #div1 ul {
+    gap: 1rem;
+  }
+}

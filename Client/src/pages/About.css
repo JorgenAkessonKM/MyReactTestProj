@@ -1,0 +1,27 @@
+.about-container {
+    background-color: #ffffff;
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    min-height: calc(100vh - 400px);
+}
+
+.about-container h1 {
+    color: #222222;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+.about-container h2 {
+    color: #0066cc;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+}
+
+.about-container p {
+    color: #555555;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}

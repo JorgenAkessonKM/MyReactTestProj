@@ -2,6 +2,7 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
+import Cards from "./pages/Cards";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -17,6 +18,7 @@ export default function AppRoutes() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/cards" element={<Cards />} />
         <Route element={<PrivateRoute />}>
           <Route path="/contact" element={<Contact />} />
         </Route>

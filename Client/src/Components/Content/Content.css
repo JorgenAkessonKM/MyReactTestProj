@@ -1,0 +1,11 @@
+main {
+    background-color: #ffffff;
+    min-height: calc(100vh - 300px);
+    padding: 2rem 0;
+}
+
+.page-container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+}

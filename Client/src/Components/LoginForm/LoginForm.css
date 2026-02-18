@@ -2,7 +2,35 @@
   width: 100%;
   max-width: 420px;
   margin: 0 auto;
-  background: var(--bs-white, #fff);
+  background: #ffffff;
+  border: 1px solid #cccccc;
   border-radius: 8px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.login-form h3 {
+  color: #222222;
+  font-weight: 600;
+}
+
+.login-form .form-label {
+  color: #333333;
+}
+
+.login-form .form-control {
+  background-color: #ffffff;
+  color: #333333;
+  border: 1px solid #cccccc;
+}
+
+.login-form .form-control:focus {
+  background-color: #f9f9f9;
+  color: #333333;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.25);
+}
+
+.login-form .invalid-feedback {
+  color: #dc3545;
+  display: block;
 }
