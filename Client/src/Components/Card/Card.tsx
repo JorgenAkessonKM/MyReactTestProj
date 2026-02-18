@@ -11,7 +11,8 @@ function Card({ name, age, fileName }: Props) {
     <>
       <div className={style.main}>
         <div className={style.textArea}>
-          {name} {age}
+          <p>{name}</p>
+          <p>Age: {age}</p>
         </div>
         <img
           src={"/images/" + fileName}
