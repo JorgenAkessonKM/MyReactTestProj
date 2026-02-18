@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import style from "./card.module.css";
 
 interface Props {
