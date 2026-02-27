@@ -1,5 +1,6 @@
 // src/Routes.tsx
 import { Route, Routes } from "react-router-dom";
+import { LoginCallback } from "@okta/okta-react";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Cards from "./pages/Cards";
@@ -14,6 +15,7 @@ export default function AppRoutes() {
   return (
     <AuthProvider>
       <Routes>
+        <Route path="/login/callback" element={<LoginCallback />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Home />} />

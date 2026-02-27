@@ -10,6 +10,15 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const auth = useAuth() as any;
 
+  const handleLogout = async () => {
+    await auth.logOut();
+    dispatch(setName("Logged out!"));
+  };
+
+  const handleLogin = async () => {
+    await auth.loginAction();
+  };
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light">
@@ -35,30 +44,40 @@ export default function Navbar() {
                 Contact
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/login">
-                Login
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/signup">
-                Signup
-              </a>
-            </li>
-            <li className="nav-item">
-              <p className="nav-link">{name}</p>
-            </li>
-            <li className="nav-item">
-              <button
-                onClick={() => {
-                  auth.logOut();
-                  dispatch(setName("Logged out!"));
-                }}
-                className="btn btn-info"
-              >
-                Logout
-              </button>
-            </li>
+            
+            {auth.isAuthenticated ? (
+              <>
+                <li className="nav-item">
+                  <p className="nav-link">
+                    Welcome, {auth.user?.name || auth.user?.email || "User"}
+                  </p>
+                </li>
+                <li className="nav-item">
+                  <button
+                    onClick={handleLogout}
+                    className="btn btn-info"
+                  >
+                    Logout
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <button
+                    onClick={handleLogin}
+                    className="btn btn-success"
+                  >
+                    Login with Okta
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="/signup">
+                    Signup
+                  </a>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </nav>

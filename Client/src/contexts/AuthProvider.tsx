@@ -1,21 +1,37 @@
-import { useContext, createContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {
+  useContext,
+  createContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
+import { useOktaAuth } from "@okta/okta-react";
+import type { UserClaims, AuthState } from "@okta/okta-auth-js";
 
-const AuthContext = createContext();
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem("site") || "");
+interface Props {
+  children?: ReactNode;
+}
 
-  const loginAction = async (data) => {
+const AuthProvider = ({ children }: Props) => {
+  const { oktaAuth, authState } = useOktaAuth();
+  const [user, setUser] = useState<UserClaims | null>(null);
+
+  useEffect(() => {
+    if (authState?.isAuthenticated) {
+      // Get user info from Okta
+      oktaAuth.getUser().then((userInfo) => {
+        setUser(userInfo);
+      });
+    } else {
+      setUser(null);
+    }
+  }, [authState?.isAuthenticated, oktaAuth]);
+
+  const loginAction = async () => {
     try {
-      if (data.username.length != 0) {
-        setUser(data.username);
-        setToken(data.token);
-        localStorage.setItem("site", data.token);
-        return;
-      }
-      throw new Error(res.message);
+      await oktaAuth.signInWithRedirect();
     } catch (err) {
       console.error(err);
     }
@@ -23,22 +39,24 @@ const AuthProvider = ({ children }) => {
 
   async function logOut() {
     try {
-      const res = await fetch("http://localhost:8080/api/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-      console.log("Response:", res);
+      await oktaAuth.signOut();
+      setUser(null);
     } catch (err) {
-      console.warn("Logout request failed:", err);
+      console.warn("Logout failed:", err);
     }
-    setUser(null);
-    setToken("");
-    localStorage.removeItem("site");
-    console.log("Token after Logout:", localStorage.getItem("site"));
   }
 
   return (
-    <AuthContext.Provider value={{ token, user, loginAction, logOut }}>
+    <AuthContext.Provider
+      value={{
+        token: authState?.accessToken?.accessToken,
+        user,
+        loginAction,
+        logOut,
+        isAuthenticated: authState?.isAuthenticated,
+        authState,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -46,6 +64,19 @@ const AuthProvider = ({ children }) => {
 
 export default AuthProvider;
 
-export const useAuth = () => {
-  return useContext(AuthContext);
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };
+
+interface AuthContextType {
+  token?: string;
+  user: UserClaims | null;
+  loginAction: () => Promise<void>;
+  logOut: () => Promise<void>;
+  isAuthenticated?: boolean;
+  authState: AuthState | null;
+}

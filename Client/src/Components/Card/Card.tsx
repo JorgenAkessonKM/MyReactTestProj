@@ -1,4 +1,5 @@
 import style from "./card.module.css";
+import { useAuth } from "../../contexts/AuthProvider";
 
 interface Props {
   name: string;
@@ -7,6 +8,13 @@ interface Props {
 }
 
 function Card({ name, age, fileName }: Props) {
+  const { isAuthenticated } = useAuth();
+
+  // Only render card if user is authenticated
+  if (!isAuthenticated) {
+    return null;
+  }
+
   return (
     <>
       <div className={style.main}>
