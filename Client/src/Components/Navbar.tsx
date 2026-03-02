@@ -8,7 +8,7 @@ import "./Navbar.css";
 export default function Navbar() {
   const name = useSelector((state: any) => state.loggedInName.name);
   const dispatch = useDispatch();
-  const auth = useAuth() as any;
+  const auth = useAuth();
 
   const handleLogout = async () => {
     await auth.logOut();
@@ -34,17 +34,15 @@ export default function Navbar() {
                 About
               </a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/cards">
-                Cards
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/contact">
-                Contact
-              </a>
-            </li>
-            
+            {auth.isAuthenticated ? (
+              <li className="nav-item">
+                <a className="nav-link" href="/cards">
+                  Cards
+                </a>
+              </li>
+            ) : (
+              <></>
+            )}
             {auth.isAuthenticated ? (
               <>
                 <li className="nav-item">
@@ -53,10 +51,7 @@ export default function Navbar() {
                   </p>
                 </li>
                 <li className="nav-item">
-                  <button
-                    onClick={handleLogout}
-                    className="btn btn-info"
-                  >
+                  <button onClick={handleLogout} className="btn btn-info">
                     Logout
                   </button>
                 </li>
@@ -64,10 +59,7 @@ export default function Navbar() {
             ) : (
               <>
                 <li className="nav-item">
-                  <button
-                    onClick={handleLogin}
-                    className="btn btn-success"
-                  >
+                  <button onClick={handleLogin} className="btn btn-success">
                     Login with Okta
                   </button>
                 </li>

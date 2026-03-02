@@ -51,22 +51,6 @@ button:hover {
     padding: 2rem;
 }
 
-/* Contact Page */
-.contact-container {
-    background-color: #0f1419;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2rem;
-}
-
-.contact-form {
-    background-color: #1a1f2e;
-    border: 1px solid #2d3748;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
-}
-
 /* Cards Page */
 .cards-container {
     background-color: #0f1419;

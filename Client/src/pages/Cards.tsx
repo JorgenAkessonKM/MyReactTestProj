@@ -11,6 +11,7 @@ function Cards() {
           <ul>
             {getData().map((person) => (
               <Card
+                key={person.name}
                 name={person.name}
                 age={person.age}
                 fileName={person.fileName}
