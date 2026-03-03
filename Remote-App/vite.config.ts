@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import react from "@vitejs/plugin-react-swc";
 import federation from "@originjs/vite-plugin-federation";
 
 // https://vite.dev/config/
@@ -7,9 +7,11 @@ export default defineConfig({
   plugins: [
     react(),
     federation({
-      name: "host_app",
-      remotes: {
-        remote_app: "http://localhost:5001/assets/remoteEntry.js",
+      name: "remote_app",
+      filename: "remoteEntry.js",
+      exposes: {
+        "./regionUS": "./src/components/RegionUS",
+        "./regionEU": "./src/components/RegionEU",
       },
       shared: ["react", "react-dom"],
     }),
@@ -19,5 +21,10 @@ export default defineConfig({
     target: "esnext",
     minify: false,
     cssCodeSplit: false,
+  },
+  preview: {
+    port: 5001,
+    strictPort: true,
+    cors: true,
   },
 });

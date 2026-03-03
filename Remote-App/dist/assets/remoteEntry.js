@@ -2,10 +2,10 @@ const currentImports = {};
       const exportSet = new Set(['Module', '__esModule', 'default', '_export_sfc']);
       let moduleMap = {
 "./regionUS":()=>{
-      dynamicLoadingCss(["style-D1EHTbMk.css"], false, './regionUS');
+      dynamicLoadingCss(["style-DEdH99Sf.css"], false, './regionUS');
       return __federation_import('./__federation_expose_RegionUS-DI8RoDHs.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},
 "./regionEU":()=>{
-      dynamicLoadingCss(["style-D1EHTbMk.css"], false, './regionEU');
+      dynamicLoadingCss(["style-DEdH99Sf.css"], false, './regionEU');
       return __federation_import('./__federation_expose_RegionEU-17PJH0dE.js').then(module =>Object.keys(module).every(item => exportSet.has(item)) ? () => module.default : () => module)},};
       const seen = {};
       const dynamicLoadingCss = (cssFilePaths, dontAppendStylesToHead, exposeItemName) => {

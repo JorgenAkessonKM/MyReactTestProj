@@ -1,6 +1,6 @@
-import React from "react";
 import { useAuth } from "../contexts/AuthProvider";
 import "./About.css";
+import { RemoteComponentWrapper } from "../Components/RemoteComponentWrapper";
 
 function About() {
   const auth = useAuth();
@@ -18,7 +18,7 @@ function About() {
         ) : (
           <></>
         )}
-        <p>This is the About Page.</p>
+        <RemoteComponentWrapper />
       </div>
     </>
   );

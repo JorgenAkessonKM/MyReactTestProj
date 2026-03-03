@@ -1,12 +1,9 @@
-import React from "react";
-
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setName } from "../app/loggedInNameSlice";
 import { useAuth } from "../contexts/AuthProvider";
 import "./Navbar.css";
 
 export default function Navbar() {
-  const name = useSelector((state: any) => state.loggedInName.name);
   const dispatch = useDispatch();
   const auth = useAuth();
 
