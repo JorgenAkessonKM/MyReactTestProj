@@ -11,7 +11,7 @@ const LoadingSpinner = () => (
   </div>
 );
 
-export const RemoteComponentWrapper = () => {
+function RemoteComponentWrapper() {
   return (
     <div className="p-4">
       <Suspense fallback={<LoadingSpinner />}>
@@ -20,4 +20,6 @@ export const RemoteComponentWrapper = () => {
       </Suspense>
     </div>
   );
-};
+}
+
+export default RemoteComponentWrapper;

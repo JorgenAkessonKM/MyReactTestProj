@@ -1,6 +1,6 @@
 import { useAuth } from "../contexts/AuthProvider";
 import "./About.css";
-import { RemoteComponentWrapper } from "../Components/RemoteComponentWrapper";
+import RemoteComponentWrapper from "../Components/RemoteComponentWrapper";
 
 function About() {
   const auth = useAuth();
