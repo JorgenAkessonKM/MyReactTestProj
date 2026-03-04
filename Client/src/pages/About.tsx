@@ -18,7 +18,7 @@ function About() {
         ) : (
           <></>
         )}
-        <RemoteComponentWrapper />
+        <RemoteComponentWrapper remotePath="regionUS" />
       </div>
     </>
   );

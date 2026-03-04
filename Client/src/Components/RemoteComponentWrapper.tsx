@@ -11,7 +11,11 @@ const LoadingSpinner = () => (
   </div>
 );
 
-function RemoteComponentWrapper() {
+interface Props {
+  remotePath: string;
+}
+
+function RemoteComponentWrapper({ remotePath }: Props) {
   return (
     <div className="p-4">
       <Suspense fallback={<LoadingSpinner />}>
