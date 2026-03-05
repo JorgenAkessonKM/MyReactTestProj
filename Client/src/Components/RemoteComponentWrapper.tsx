@@ -12,15 +12,21 @@ const LoadingSpinner = () => (
 );
 
 interface Props {
-  remotePath: string;
+  regionName: string;
 }
 
-function RemoteComponentWrapper({ remotePath }: Props) {
+function RemoteComponentWrapper({ regionName }: Props) {
+  const normalizedRegion = regionName.toLowerCase();
+
   return (
     <div className="p-4">
       <Suspense fallback={<LoadingSpinner />}>
-        <RemoteRegionUS />
-        <RemoteRegionEU />
+        {(normalizedRegion === "us" || normalizedRegion === "all") && (
+          <RemoteRegionUS />
+        )}
+        {(normalizedRegion === "eu" || normalizedRegion === "all") && (
+          <RemoteRegionEU />
+        )}
       </Suspense>
     </div>
   );
