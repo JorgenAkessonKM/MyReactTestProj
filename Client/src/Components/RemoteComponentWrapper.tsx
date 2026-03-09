@@ -1,9 +1,46 @@
 //https://www.freecodecamp.org/news/how-to-build-micro-frontends-in-react-with-vite-and-module-federation/
 
-import React, { Suspense } from "react";
+import React, { Suspense, useMemo } from "react";
+import {
+  __federation_method_getRemote,
+  __federation_method_setRemote,
+  __federation_method_unwrapDefault,
+} from "virtual:__federation__";
+import { getFederationConfig } from "../config/federationConfig";
+import type { RegionKey } from "../config/federationConfig";
 
-const RemoteRegionUS = React.lazy(() => import("remote_app/regionUS" as any));
-const RemoteRegionEU = React.lazy(() => import("remote_app/regionEU" as any));
+type RemoteComponentType = React.ComponentType<Record<string, never>>;
+
+const normalizeExposedModule = (moduleName: string) => {
+  const trimmed = moduleName.trim();
+  if (!trimmed) {
+    return trimmed;
+  }
+  return trimmed.startsWith("./") ? trimmed : `./${trimmed}`;
+};
+
+const getRegionComponent = (region: RegionKey) => {
+  const config = getFederationConfig();
+  const moduleName = normalizeExposedModule(config.regionModules[region]);
+
+  return React.lazy(async () => {
+    __federation_method_setRemote(config.remoteName, {
+      url: config.remoteEntryUrl,
+      format: "esm",
+      from: "vite",
+    });
+
+    const remoteModule = await __federation_method_getRemote(
+      config.remoteName,
+      moduleName,
+    );
+    const unwrapped = await __federation_method_unwrapDefault(remoteModule);
+
+    return {
+      default: unwrapped as RemoteComponentType,
+    };
+  });
+};
 
 const LoadingSpinner = () => (
   <div className="flex justify-center p-4">
@@ -17,6 +54,8 @@ interface Props {
 
 function RemoteComponentWrapper({ regionName }: Props) {
   const normalizedRegion = regionName.toLowerCase();
+  const RemoteRegionUS = useMemo(() => getRegionComponent("us"), []);
+  const RemoteRegionEU = useMemo(() => getRegionComponent("eu"), []);
 
   return (
     <div className="p-4">

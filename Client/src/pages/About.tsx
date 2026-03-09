@@ -5,10 +5,12 @@ import Dropdown from "react-bootstrap/Dropdown";
 //import { DropdownMenu } from "react-bootstrap";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { useState } from "react";
+import { getConfig } from "../config";
 
 function About() {
+  const regions = getConfig();
   const auth = useAuth();
-  const [selectedRegion, setSelectedRegion] = useState("test");
+  const [selectedRegion, setSelectedRegion] = useState("ALL");
 
   const clickedHandler = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
@@ -32,17 +34,17 @@ function About() {
         ) : (
           <></>
         )}
-        <DropdownButton id="dropdown-basic-button" title="Region">
-          <Dropdown.Item id="ALL" onClick={clickedHandler}>
-            ALL
-          </Dropdown.Item>
-          <Dropdown.Item id="EU" onClick={clickedHandler}>
-            EU
-          </Dropdown.Item>
-          <Dropdown.Item id="US" onClick={clickedHandler}>
-            US
-          </Dropdown.Item>
+
+        <DropdownButton id="dropdown-basic-button" title="Dynamic Regions">
+          {regions.regions.map((region) => (
+            <>
+              <Dropdown.Item id={region} onClick={clickedHandler}>
+                {region}
+              </Dropdown.Item>
+            </>
+          ))}
         </DropdownButton>
+
         <p>Selected region: {selectedRegion}</p>
 
         <RemoteComponentWrapper regionName={selectedRegion} />

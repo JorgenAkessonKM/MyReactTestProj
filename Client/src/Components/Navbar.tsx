@@ -33,6 +33,11 @@ export default function Navbar() {
                 About
               </a>
             </li>
+            <li className="nav-item">
+              <a className="nav-link" href="/config">
+                Config
+              </a>
+            </li>
             {auth.isAuthenticated ? (
               <>
                 <li className="nav-item">

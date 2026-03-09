@@ -1,0 +1,4 @@
+{
+  "regions": ["ALL", "EU", "US", "East Asia"],
+  "apiBaseUrl": "https://api.example.com"
+}
