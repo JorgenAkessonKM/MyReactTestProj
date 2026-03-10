@@ -18,4 +18,9 @@ export default defineConfig({
     minify: false,
     cssCodeSplit: false,
   },
+  server: {
+    proxy: {
+      "/api/db": "http://localhost:8080",
+    },
+  },
 });

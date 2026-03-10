@@ -1,0 +1,9 @@
+
+Start DB server.
+PS C:\Dev\MyReactTestProj> npm run db:server --prefix Client
+
+Start Remote-App.
+PS C:\Dev\MyReactTestProj\Remote-App> npm run dev 
+
+Start Client.
+PS C:\Dev\MyReactTestProj\Client> npm run dev 
