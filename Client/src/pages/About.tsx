@@ -4,6 +4,7 @@ import RemoteComponentWrapper from "../Components/RemoteComponentWrapper";
 import Dropdown from "react-bootstrap/Dropdown";
 //import { DropdownMenu } from "react-bootstrap";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { getConfig } from "../config";
 
@@ -11,6 +12,7 @@ function About() {
   const regions = getConfig();
   const auth = useAuth();
   const [selectedRegion, setSelectedRegion] = useState("ALL");
+  const [showToken, setShowToken] = useState(false);
 
   const clickedHandler = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
@@ -30,6 +32,19 @@ function About() {
             <p>{auth.user?.email}</p>
             <p>{auth.user?.locale}</p>
             <p>{auth.user?.zoneinfo}</p>
+            <Button
+              variant="primary"
+              type="button"
+              style={{ margin: 5 }}
+              onClick={() => setShowToken((prev) => !prev)}
+            >
+              {showToken ? "Hide Okta Token" : "Show Okta Token"}
+            </Button>
+            {showToken ? (
+              <pre style={{ whiteSpace: "pre-wrap", wordBreak: "break-all" }}>
+                {auth.token || "No token found"}
+              </pre>
+            ) : null}
           </>
         ) : (
           <></>
