@@ -8,6 +8,14 @@ export interface FederationConfig {
 
 const STORAGE_KEY = "federation-config";
 
+const normalizeRemoteEntryUrl = (url: string) => {
+  const trimmed = url.trim();
+  if (!trimmed) {
+    return trimmed;
+  }
+  return trimmed.replace("http://localhost:5174/", "http://localhost:5001/");
+};
+
 const defaultConfig: FederationConfig = {
   remoteName: "remote_app",
   remoteEntryUrl: "http://localhost:5001/assets/remoteEntry.js",
@@ -25,9 +33,26 @@ export function getFederationConfig(): FederationConfig {
     }
 
     const parsed = JSON.parse(raw) as Partial<FederationConfig>;
+    const parsedRemoteEntryUrl = normalizeRemoteEntryUrl(
+      parsed.remoteEntryUrl || defaultConfig.remoteEntryUrl,
+    );
+
+    if (
+      parsed.remoteEntryUrl &&
+      parsed.remoteEntryUrl !== parsedRemoteEntryUrl
+    ) {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          ...parsed,
+          remoteEntryUrl: parsedRemoteEntryUrl,
+        }),
+      );
+    }
+
     return {
       remoteName: parsed.remoteName || defaultConfig.remoteName,
-      remoteEntryUrl: parsed.remoteEntryUrl || defaultConfig.remoteEntryUrl,
+      remoteEntryUrl: parsedRemoteEntryUrl,
       regionModules: {
         us: parsed.regionModules?.us || defaultConfig.regionModules.us,
         eu: parsed.regionModules?.eu || defaultConfig.regionModules.eu,

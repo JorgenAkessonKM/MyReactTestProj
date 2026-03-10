@@ -22,6 +22,11 @@ export default defineConfig({
     minify: false,
     cssCodeSplit: false,
   },
+  server: {
+    port: 5001,
+    strictPort: true,
+    cors: true,
+  },
   preview: {
     port: 5001,
     strictPort: true,
