@@ -38,7 +38,7 @@ function About() {
         <DropdownButton id="dropdown-basic-button" title="Dynamic Regions">
           {regions.regions.map((region) => (
             <>
-              <Dropdown.Item id={region} onClick={clickedHandler}>
+              <Dropdown.Item key={region} id={region} onClick={clickedHandler}>
                 {region}
               </Dropdown.Item>
             </>
