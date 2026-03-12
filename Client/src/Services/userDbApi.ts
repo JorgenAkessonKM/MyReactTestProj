@@ -5,13 +5,11 @@ export interface DbUser {
 }
 
 export async function getDbUserByName(name: string): Promise<DbUser> {
-  const response = await fetch(`/api/db/users/${encodeURIComponent(name)}`);
-  if (!response.ok) {
-    const message = await response.text();
-    throw new Error(message || "Failed to get user from database");
-  }
-
-  return response.json();
+  return fetch(`/api/db/users/${encodeURIComponent(name)}`)
+    .then((res) => res.json())
+    .then((res) => {
+      return res as DbUser;
+    });
 }
 
 export async function upsertDbUser(user: DbUser): Promise<void> {

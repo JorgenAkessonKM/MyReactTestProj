@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently -k -n DB,WEB -c yellow,cyan \"npm:dev:db\" \"npm:dev:client\"",
+    "dev": "concurrently -k 'npm:dev:db' 'npm:dev:client'",
     "dev:client": "vite",
     "dev:db": "node server/db-server.mjs",
     "db:server": "npm run dev:db",
