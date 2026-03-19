@@ -10,3 +10,6 @@ PS C:\Dev\MyReactTestProj\Client> npm run dev
 Bra länkar:
 https://dev.to/wizdomtek/typescript-express-building-robust-apis-with-nodejs-1fln
 https://www.sohamkamani.com/typescript/rest-http-api-call/
+
+Swagger: https://dev.to/cuongnp/swagger-nodejs-express-a-step-by-step-guide-4ob
+http://localhost:8080/swagger/

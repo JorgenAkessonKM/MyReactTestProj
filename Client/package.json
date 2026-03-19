@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently -k 'npm:dev:db' 'npm:dev:client'",
     "dev:client": "vite",
-    "dev:db": "node server/db-server.mjs",
+    "dev:db": "node server/db-server.js",
     "db:server": "npm run dev:db",
     "start": "npm run build && npm run dev",
     "build": "tsc -b && vite build",
@@ -21,13 +21,16 @@
     "@types/react-redux": "^7.1.34",
     "better-sqlite3": "^12.4.1",
     "bootstrap": "^5.3.8",
+    "cors": "^2.8.6",
     "express": "^5.1.0",
     "react": "^19.2.0",
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.2.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.10.1",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

@@ -1,7 +1,8 @@
 import "./Home.css";
 import DynamicComponent from "../Components/components";
 import { Button } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getDbDataById } from "../Services/dataDbApi";
 
 // const data = {
 //   content: {
@@ -19,6 +20,8 @@ import { useState } from "react";
 //     ],
 //   },
 // };
+//
+// {"body":[{"component":"one","id":"111","name":"Dynamic component of type One"},{"component":"two","id":"222","name":"Dynamic component of type Two"}]}
 
 class BodyItem {
   public component: string;
@@ -50,6 +53,7 @@ class PageData {
 
 function Home() {
   const [data, setData] = useState<PageData>(new PageData());
+  const [dbData, setDbData] = useState("");
 
   function AddComponentHandler(): void {
     const myData = new PageData(
@@ -67,9 +71,36 @@ function Home() {
     );
   }
 
+  const getDataById = async () => {
+    try {
+      const resp = await getDbDataById("1");
+      var a = JSON.parse(resp.data);
+      setData(new PageData(new Content([...a.body])));
+      setDbData(resp.data);
+    } catch (error) {
+      setDbData("");
+    }
+  };
+
+  useEffect(() => {
+    void getDataById();
+  }, []);
+
   return (
     <div className="home-container">
       <h1>Home Page</h1>
+
+      <div style={{ marginTop: 12 }}>
+        <label htmlFor="db-data-output">Data from SQLite DB (id=1)</label>
+        <textarea
+          id="db-data-output"
+          readOnly
+          value={dbData}
+          rows={4}
+          style={{ width: "100%", marginTop: 8 }}
+        />
+      </div>
+
       <Button onClick={AddComponentHandler}>Add comnponents</Button>
       {data.content.body.map((b) => {
         return <DynamicComponent key={b.id} block={{ ...b, Name: b.name }} />;
