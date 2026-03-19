@@ -32,6 +32,7 @@ db.exec(`
 db.exec(`
   CREATE TABLE IF NOT EXISTS data (
     id TEXT PRIMARY KEY,
+    type TEXT NOT NULL,
     data TEXT NOT NULL
   )
 `);
@@ -45,8 +46,8 @@ const upsertUserStmt = db.prepare(`
 `);
 
 const upsertData = db.prepare(`
-  INSERT INTO data (id, data)
-  VALUES (@id, @data)
+  INSERT INTO data (id, type, data)
+  VALUES (@id, @type, @data)
   ON CONFLICT(id) DO UPDATE SET
     data = excluded.data
 `);
@@ -153,20 +154,20 @@ app.post("/api/db/users", (req, res) => {
   res.json({ ok: true, saved: { name, region } });
 });
 
-const getDataById = db.prepare(
-  "SELECT id, data FROM data WHERE id = ?",
+const getDataByType = db.prepare(
+  "SELECT id, type, data FROM data WHERE type = ?",
 );
 
 /**
  * @openapi
- * /api/db/data/{id}:
+ * /api/db/data/{type}:
  *   get:
  *     tags:
  *       - Data
- *     summary: Get data by id
+ *     summary: Get data by type
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: type
  *         required: true
  *         schema:
  *           type: string
@@ -178,14 +179,14 @@ const getDataById = db.prepare(
  *       404:
  *         description: Data not found
  */
-app.get("/api/db/data/:id", (req, res) => {
-  const id = req.params.id?.trim();
-  if (!id) {
-    res.status(400).json({ error: "id is required" });
+app.get("/api/db/data/:type", (req, res) => {
+  const type = req.params.type?.trim();
+  if (!type) {
+    res.status(400).json({ error: "Type is required" });
     return;
   }
 
-  const data = getDataById.get(id);
+  const data = getDataByType.get(type);
   if (!data) {
     res.status(404).json({ error: "Data not found" });
     return;

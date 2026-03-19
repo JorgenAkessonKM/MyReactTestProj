@@ -2,7 +2,7 @@ import "./Home.css";
 import DynamicComponent from "../Components/components";
 import { Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { getDbDataById } from "../Services/dataDbApi";
+import { getDbDataByType } from "../Services/dataDbApi";
 
 // const data = {
 //   content: {
@@ -21,7 +21,7 @@ import { getDbDataById } from "../Services/dataDbApi";
 //   },
 // };
 //
-// {"body":[{"component":"one","id":"111","name":"Dynamic component of type One"},{"component":"two","id":"222","name":"Dynamic component of type Two"}]}
+// Json: {"body":[{"component":"one","id":"111","name":"Mytext"},{"component":"two","id":"222","name":"Mytext"}]}
 
 class BodyItem {
   public component: string;
@@ -71,9 +71,9 @@ function Home() {
     );
   }
 
-  const getDataById = async () => {
+  const getDataByType = async () => {
     try {
-      const resp = await getDbDataById("1");
+      const resp = await getDbDataByType("DynamicComponents");
       var a = JSON.parse(resp.data);
       setData(new PageData(new Content([...a.body])));
       setDbData(resp.data);
@@ -83,7 +83,7 @@ function Home() {
   };
 
   useEffect(() => {
-    void getDataById();
+    void getDataByType();
   }, []);
 
   return (
